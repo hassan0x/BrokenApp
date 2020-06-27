@@ -1,13 +1,14 @@
 #!/bin/bash
 
-cd /var/www/html/
+cp -r WebAppPentest /var/www/html/
 
 apt-get install -y apache2 php libapache2-mod-php php-gd mariadb-server php-mysql php-xml php-curl php-mbstring
 
 a2enmod rewrite
 a2enmod auth_digest
 
-nano /etc/apache2/apache2.conf
+cat << EOT >> /etc/apache2/apache2.conf
+
 <Directory "/var/www/html/WebAppPentest/0-Protected">
   AllowOverride All
   Options Indexes FollowSymLinks
@@ -29,26 +30,25 @@ nano /etc/apache2/apache2.conf
   Allow from all
 </Directory>
 
-mysql
-use mysql;
+EOT
+
+mysql -u root -p mysql << eof
 update user set authentication_string=PASSWORD("WebAppPentest") where user="root";
 update user set plugin="mysql_native_password" where user="root";
 flush privileges;
-exit;
+eof
 
-nano /etc/php/7.3/apache2/php.ini
-error_reporting = E_ALL
-display_errors = On
-allow_url_fopen = On
-allow_url_include = On
+sed -i '/error_reporting =/c\error_reporting = E_ALL' /etc/php/*/apache2/php.ini
+sed -i '/display_errors =/c\display_errors = On' /etc/php/*/apache2/php.ini
+sed -i '/allow_url_fopen =/c\allow_url_fopen = On' /etc/php/*/apache2/php.ini
+sed -i '/allow_url_include =/c\allow_url_include = On' /etc/php/*/apache2/php.ini
 
-chmod -R 755 WebAppPentest
-chmod 777 WebAppPentest/4-CSRF
-chmod 777 WebAppPentest/8-FileUpload/uploads
+chmod -R 755 /var/www/html/WebAppPentest
+chmod 777 /var/www/html/WebAppPentest/4-CSRF
+chmod 777 /var/www/html/WebAppPentest/8-FileUpload/uploads
 chmod 777 /var/log/apache2/access.log
 
 service mysql restart
 service apache2 restart
 
 php Setup.php
-
