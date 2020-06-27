@@ -8,3 +8,5 @@ bash Setup.sh
 
 ### Usage
 Just access your localhost after the installation.
+
+![alt text](https://github.com/hassan0x/BrokenApp/blob/master/BrokenApp.png?raw=true)
