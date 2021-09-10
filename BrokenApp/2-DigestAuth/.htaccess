@@ -1,0 +1,4 @@
+AuthType Digest
+AuthName "TEST DIGEST"
+AuthUserFile /var/www/html/BrokenApp/2-DigestAuth/.htpasswd
+Require valid-user

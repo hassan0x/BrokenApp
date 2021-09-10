@@ -10,16 +10,6 @@ input[type=text], select {
   box-sizing: border-box;
 }
 
-input[type=password], select {
-  width: 50%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
 input[type=submit] {
   width: 50%;
   background-color: #4CAF50;
@@ -43,24 +33,19 @@ div {
 </style>
 <body>
 
-<h2>Login 1</h2>
-
-<form action="">
-  Solve This:<br>
-  <input type="text" name="user">
-  <br>
-  <input type="password" name="password">
-  <br>
-  <input type="submit" value="Login">
-</form>
+<h2>Your Personal Home Page!</h2>
 
 <?php
-if (array_key_exists ("user", $_GET) && $_GET["user"] != NULL && $_GET["user"] != '') {
 
-	$servername = "localhost";
+session_start();
+
+if ( isset( $_SESSION['user_id'] ) ) {
+    // Grab user data from the database using the user_id
+    // Let them access the "logged in only" pages
+    $servername = "localhost";
 	$username = "root";
-	$password = "WebAppPentest";
-	$dbname = "WebAppPentest";
+	$password = "BrokenApp";
+	$dbname = "BrokenApp";
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -68,13 +53,8 @@ if (array_key_exists ("user", $_GET) && $_GET["user"] != NULL && $_GET["user"] !
 	if ($conn->connect_error) {
 	    die("Connection failed: " . $conn->connect_error) . " \n";
 	}
-	
-	//Query
-	
-	$user = $_GET['user'];
-	$password = MD5($_GET['password']);
-	
-	$sql = "SELECT * FROM users where user = '" .$user. "' and password = '" .$password. "';";
+
+	$sql = "SELECT * FROM users where user_id = " .$_SESSION['user_id']. ";";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {
@@ -84,7 +64,7 @@ if (array_key_exists ("user", $_GET) && $_GET["user"] != NULL && $_GET["user"] !
 			echo "First Name: " . $row["first_name"] . "<br>";
 			echo "Last Name: " . $row["last_name"] . "<br>";
 			echo "Username: " . $row["user"] . "<br>";
-			echo "Password: " . $row["password"] . "<br>";
+			echo "Password: " . $row["password"] . "<br><br>";
 		}
 	}
 	else {
@@ -92,6 +72,28 @@ if (array_key_exists ("user", $_GET) && $_GET["user"] != NULL && $_GET["user"] !
 	}
 
 	$conn->close();
+
+} else {
+    // Redirect them to the login page
+    header("Location: http://127.0.0.1/BrokenApp/7-Login/login2.php");
+}
+
+?>
+
+
+<form action="">
+  Account Number: <br>
+  <input type="text" name="solve1">
+  <br>
+  Money Amount: <br>
+  <input type="text" name="solve2">
+  <br>
+  <input type="submit" value="Submit">
+</form>
+
+<?php
+if (array_key_exists ("solve1", $_GET) && $_GET["solve1"] != NULL && $_GET["solve1"] != '') {
+    echo 'Hello ' . $_SESSION['user'] . ' you have transfered this amount: ' . $_GET['solve2'] . ' to this account: ' . $_GET['solve1'];
 }
 ?>
 

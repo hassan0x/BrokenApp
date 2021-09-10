@@ -48,8 +48,8 @@ div {
 
 	$servername = "localhost";
 	$username = "root";
-	$password = "WebAppPentest";
-	$dbname = "WebAppPentest";
+	$password = "BrokenApp";
+	$dbname = "BrokenApp";
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -80,8 +80,8 @@ if (array_key_exists ("solve1", $_GET) && $_GET["solve1"] != NULL && $_GET["solv
     
     $servername = "localhost";
 	$username = "root";
-	$password = "WebAppPentest";
-	$dbname = "WebAppPentest";
+	$password = "BrokenApp";
+	$dbname = "BrokenApp";
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -93,7 +93,7 @@ if (array_key_exists ("solve1", $_GET) && $_GET["solve1"] != NULL && $_GET["solv
 	//Query
 	$sql = "INSERT INTO posts (comment, name) VALUES ('" .$_GET["solve1"]. "','" .$_GET["solve2"]. "');";
 	if ($conn->query($sql) === TRUE) {
-		header('Location: ' . "http://127.0.0.1/WebAppPentest/3-XSS/xss1_stored.php");
+		header('Location: ' . "http://127.0.0.1/BrokenApp/3-XSS/xss1_stored.php");
 	} else {
 		echo "Error Inserting data: " . $conn->error . " \n";
 	}

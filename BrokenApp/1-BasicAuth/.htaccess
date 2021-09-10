@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "TEST TEST"
+AuthUserFile "/var/www/html/BrokenApp/1-BasicAuth/.htpasswd"
+Require valid-user

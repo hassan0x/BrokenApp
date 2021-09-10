@@ -47,8 +47,8 @@ if (array_key_exists ("solve", $_GET) && $_GET["solve"] != NULL && $_GET["solve"
 
 	$servername = "localhost";
 	$username = "root";
-	$password = "WebAppPentest";
-	$dbname = "WebAppPentest";
+	$password = "BrokenApp";
+	$dbname = "BrokenApp";
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);

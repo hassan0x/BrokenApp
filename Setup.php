@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "WebAppPentest";
-$dbname = "WebAppPentest";
+$password = "BrokenApp";
+$dbname = "BrokenApp";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password);
@@ -11,7 +11,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error) . " \n";
 }
 
-$sql = "DROP DATABASE IF EXISTS WebAppPentest";
+$sql = "DROP DATABASE IF EXISTS BrokenApp";
 if ($conn->query($sql) === TRUE) {
     echo "Drop Database successfully \n";
 } else {
@@ -19,7 +19,7 @@ if ($conn->query($sql) === TRUE) {
 }
 
 // Create database
-$sql = "CREATE DATABASE WebAppPentest";
+$sql = "CREATE DATABASE BrokenApp";
 if ($conn->query($sql) === TRUE) {
     echo "Database created successfully \n";
 } else {

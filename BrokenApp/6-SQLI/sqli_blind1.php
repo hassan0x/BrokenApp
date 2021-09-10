@@ -33,7 +33,7 @@ div {
 </style>
 <body>
 
-<h2>SQL Injection 3</h2>
+<h2>Blind SQL Injection 1</h2>
 
 <form action="">
   Solve This:<br>
@@ -47,8 +47,10 @@ if (array_key_exists ("solve", $_GET) && $_GET["solve"] != NULL && $_GET["solve"
 
 	$servername = "localhost";
 	$username = "root";
-	$password = "WebAppPentest";
-	$dbname = "WebAppPentest";
+	$password = "BrokenApp";
+	$dbname = "BrokenApp";
+
+	ini_set("display_errors", "off");
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -58,11 +60,7 @@ if (array_key_exists ("solve", $_GET) && $_GET["solve"] != NULL && $_GET["solve"
 	}
 	
 	//Query
-	
-	$id = mysqli_real_escape_string($conn, $_GET['solve']);
-	
-	$sql = "SELECT first_name, last_name FROM users where user_id = " . $id . ";";
-	
+	$sql = "SELECT first_name, last_name FROM users where user_id = '" . $_GET['solve'] . "';";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {
@@ -71,7 +69,6 @@ if (array_key_exists ("solve", $_GET) && $_GET["solve"] != NULL && $_GET["solve"
 		    echo "id: " . $_GET['solve'] . "<br>"; 
 			echo "First Name: " . $row["first_name"] . "<br>"; 
 			echo "Last Name: " . $row["last_name"] . "<br>";
-			break;
 		}
 	}
 	else {
